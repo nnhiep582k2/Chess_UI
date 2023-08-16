@@ -1,0 +1,69 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-primary: #769656;
+    --color-secondary: #eeeed2;
+    --color-white: #ffffff;
+    --color-black: #000000;
+}
+
+html {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+.board {
+    display: grid;
+    overflow: hidden;
+    border-radius: 6px;
+    width: calc(560px + 6px);
+    height: calc(560px + 6px);
+    border: 3px solid var(--color-black);
+    grid-template-columns: repeat(8, 1fr);
+}
+
+.board .column:first-child .square:first-child {
+    border-top-left-radius: 3px;
+}
+
+.board .column:first-child .square:last-child {
+    border-bottom-left-radius: 3px;
+}
+
+.board .column:last-child .square:first-child {
+    border-top-right-radius: 3px;
+}
+
+.board .column:last-child .square:last-child {
+    border-bottom-right-radius: 3px;
+}
+
+.column:nth-of-type(odd) .square:nth-of-type(even) {
+    background-color: var(--color-primary);
+}
+
+.column:nth-of-type(even) .square:nth-of-type(odd) {
+    background-color: var(--color-primary);
+}
+
+.square {
+    width: 70px;
+    height: 70px;
+    background-color: var(--color-secondary);
+}
+
+.square img {
+    width: 100%;
+    cursor: pointer;
+}
