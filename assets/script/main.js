@@ -19,7 +19,7 @@ const selectedSquare = [];
 for (const squareData of squareDataSource) {
     squareData.addEventListener('click', (event) => {
         const theID = squareData.getAttribute('id');
-        const theInside = document.getElementById(theID).innerHTML;
+        const theInside = document.getElementById(theID)?.innerHTML;
         if (selectedSquare.length > 0) {
             selectedSquare[0].removeAttribute('style');
             selectedSquare.length = 0;
@@ -53,6 +53,27 @@ for (const pawnData of pawnDataSource) {
                 document.getElementById(currentID[0] + (change + i + 1))
             );
         }
-        console.log(steps);
+        highlightGuide(steps);
     });
 }
+
+// Guide
+const trackCircleItems = [];
+
+const highlightGuide = (theSteps) => {
+    if (trackCircleItems.length > 0) {
+        undoCircle(trackCircleItems);
+    }
+    const child = '<div class="circle"></div>';
+    theSteps?.forEach((step) => {
+        step.innerHTML = child;
+        step.classList.add('flex-center');
+        trackCircleItems.push(step);
+    });
+};
+
+const undoCircle = (circleArrays) => {
+    circleArrays?.forEach((circle) => {
+        circle.innerHTML = '';
+    });
+};
