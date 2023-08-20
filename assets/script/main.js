@@ -1,79 +1,31 @@
-// Data
-const columnDataSource = document.querySelectorAll('.column');
-const columnNames = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-let columnIndex = 0;
+import { dataSource } from '/assets/script/data.js';
+import { Square } from '/assets/script/type.js';
+import { addPieces, renderUI } from '/assets/script/render.js';
 
-for (const columnData of columnDataSource) {
-    let counter = 1;
-    for (const square of columnData.children) {
-        square.setAttribute('id', columnNames[columnIndex] + counter);
-        counter++;
+for (let i = 8; i > 0; i--) {
+    const isEvenRow = i % 2 == 0;
+    const rowArray = [];
+    for (let j = 97; j < 105; j++) {
+        const isEvenSquare = j % 2 == 0;
+        const columnName = String.fromCharCode(j);
+        const id = columnName + i;
+        const square = new Square();
+        square.id = id;
+        if ((!isEvenRow && !isEvenSquare) || (isEvenRow && isEvenSquare)) {
+            square.color = 'dark';
+        }
+        if ((isEvenRow && !isEvenSquare) || (!isEvenRow && isEvenSquare)) {
+            square.color = 'light';
+        }
+        rowArray.push(square);
     }
-    columnIndex++;
+    dataSource.push(rowArray);
 }
 
-// Events handlers
-const squareDataSource = document.querySelectorAll('.square');
-const selectedSquare = [];
-
-for (const squareData of squareDataSource) {
-    squareData.addEventListener('click', (event) => {
-        const theID = squareData.getAttribute('id');
-        const theInside = document.getElementById(theID)?.innerHTML;
-        if (selectedSquare.length > 0) {
-            selectedSquare[0].removeAttribute('style');
-            selectedSquare.length = 0;
-        }
-        if (theInside.includes('black') || theInside.includes('white')) {
-            document.getElementById(theID).style.backgroundColor = '#dddd10';
-            selectedSquare.push(squareData);
-            console.log(selectedSquare);
-        }
+dataSource.forEach((row) => {
+    row.forEach((square) => {
+        addPieces(square);
     });
-}
+});
 
-// Rules
-const pawnDataSource = [];
-
-for (const columnName of columnNames) {
-    pawnDataSource.push(document.getElementById(columnName + 2));
-}
-
-for (const columnName of columnNames) {
-    pawnDataSource.push(document.getElementById(columnName + 7));
-}
-
-for (const pawnData of pawnDataSource) {
-    pawnData.addEventListener('click', (event) => {
-        const currentID = pawnData.getAttribute('id');
-        let change = +currentID[1];
-        const steps = [];
-        for (let i = 0; i < 2; i++) {
-            steps.push(
-                document.getElementById(currentID[0] + (change + i + 1))
-            );
-        }
-        highlightGuide(steps);
-    });
-}
-
-// Guide
-const trackCircleItems = [];
-
-const highlightGuide = (theSteps) => {
-    if (trackCircleItems.length > 0) {
-        undoCircle(trackCircleItems);
-    }
-    const child = '<div class="circle"></div>';
-    theSteps?.forEach((step) => {
-        step.innerHTML = child;
-        step.classList.add('flex-center');
-        trackCircleItems.push(step);
-    });
-};
-
-const undoCircle = (circleArrays) => {
-    circleArrays?.forEach((circle) => {
-        circle.innerHTML = '';
-    });
-};
+renderUI(dataSource);
