@@ -15,6 +15,18 @@ html {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.color-dark {
+    background-color: var(--color-primary);
+}
+
+.color-light {
+    background-color: var(--color-secondary);
+}
+
+.color-highlight {
+    background-color: #d5d51a;
+}
+
 .container {
     display: flex;
     align-items: center;
@@ -24,7 +36,8 @@ html {
 }
 
 .board {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
     border-radius: 6px;
     width: calc(560px + 6px);
@@ -33,34 +46,18 @@ html {
     grid-template-columns: repeat(8, 1fr);
 }
 
-.board .column:first-child .square:first-child {
-    border-top-left-radius: 3px;
-}
-
-.board .column:first-child .square:last-child {
-    border-bottom-left-radius: 3px;
-}
-
-.board .column:last-child .square:first-child {
-    border-top-right-radius: 3px;
-}
-
-.board .column:last-child .square:last-child {
-    border-bottom-right-radius: 3px;
-}
-
-.column:nth-of-type(odd) .square:nth-of-type(even) {
-    background-color: var(--color-primary);
-}
-
-.column:nth-of-type(even) .square:nth-of-type(odd) {
-    background-color: var(--color-primary);
-}
-
 .square {
     width: 70px;
     height: 70px;
-    background-color: var(--color-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rank-style {
+    width: 560px;
+    height: 70px;
+    display: flex;
 }
 
 .square img {
@@ -69,8 +66,9 @@ html {
 }
 
 .circle {
-    width: 30%;
-    height: 30%;
+    width: 25px;
+    height: 25px;
+    display: block;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.15);
 }
